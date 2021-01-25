@@ -225,7 +225,24 @@ void CanBus::set_current(CANMessage &msg)
     //  Coppy memory of current to    
     std::memcpy(&controller->des_cur_bytes, &cur_bytes, sizeof(int16_t));
     
-    get_sensors(rxMsg);
+    uint16_t mot_counts;
+    uint16_t lin_counts;
+    uint16_t f_sensor;     // 0    ... 65535
+    uint16_t m_current;   // 0    ... 65535
+    
+    std::memcpy(&mot_counts, &controller->mot_counts, sizeof(uint16_t) );
+    std::memcpy(&lin_counts, &controller->lin_counts, sizeof(uint16_t) );
+    std::memcpy(&f_sensor, &controller->f_sensor, sizeof(uint16_t) );
+    std::memcpy(&m_current, &controller->m_current, sizeof(uint16_t) );
+
+    txMsg.data[0] = *(uint8_t *)(&mot_counts);
+    txMsg.data[1] = *((uint8_t *)(&mot_counts) + 1);
+    txMsg.data[2] = *(uint8_t *)(&lin_counts);
+    txMsg.data[3] = *((uint8_t *)(&lin_counts) + 1);
+    txMsg.data[4] = *(uint8_t *)(&f_sensor); // f_sensor & 0xFF;
+    txMsg.data[5] = *((uint8_t *)(&f_sensor) + 1);
+    txMsg.data[6] = m_current & 0xFF;
+    txMsg.data[7] = (m_current & 0xFF00) >> 8;
 
     can.write(txMsg);
 }
