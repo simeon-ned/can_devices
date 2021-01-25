@@ -20,6 +20,7 @@ public:
         MSG_MOTOR_OFF = 0x80,
         MSG_SET_CURRENT = 0xA1,
         MSG_RESET = 0x05,
+        MSG_GET_SENSORS = 0x9C,
         MSG_SET_KINEMATICS, // set length and radius 
         MSG_SET_MOT_GAINS, // set motor pd gains
         MSG_SET_LIN_GAINS, // set linear pd gains
@@ -50,7 +51,7 @@ public:
     void reset_device(CANMessage &msg); 
     // void set_current_1(CANMessage &msg);
     void set_current(CANMessage &msg);
-    
+    void get_sensors(CANMessage &msg);
     // TODO:
     void write_pid_ram(CANMessage &msg);
     void read_pid_callback(CANMessage &msg);

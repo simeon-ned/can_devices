@@ -36,6 +36,9 @@ void CanBus::onMsgReceived()
         case MSG_RESET:
             reset_device(rxMsg);
             break;
+        case MSG_GET_SENSORS:
+            get_sensors(rxMsg);
+            break;
         // case MSG_WRITE_PID_RAM:
         //     write_pid_ram(rxMsg);
         //     break;
@@ -184,17 +187,10 @@ void CanBus::reset_device(CANMessage &msg)
 }
 
 
-void CanBus::set_current(CANMessage &msg)
+void CanBus::get_sensors(CANMessage &msg)
 {
     txMsg.id = msg.id;
-    txMsg.data[0] = msg.data[0];
-
-    int16_t cur_bytes =  (msg.data[2] << 8) | msg.data[1];
-    // int32_t cur_bytes = (msg.data[4] << 24) | (msg.data[3] << 16) | (msg.data[2] << 8) | msg.data[1];
-    
-    //  Coppy memory of current to    
-    std::memcpy(&controller->des_cur_bytes, &cur_bytes, sizeof(int16_t));
- 
+    // txMsg.data[0] = msg.data[0];
     uint16_t mot_counts;
     uint16_t lin_counts;
     uint16_t f_sensor;     // 0    ... 65535
@@ -213,6 +209,23 @@ void CanBus::set_current(CANMessage &msg)
     txMsg.data[5] = *((uint8_t *)(&f_sensor) + 1);
     txMsg.data[6] = m_current & 0xFF;
     txMsg.data[7] = (m_current & 0xFF00) >> 8;
+    
+    can.write(txMsg);
+}
+
+
+void CanBus::set_current(CANMessage &msg)
+{
+    txMsg.id = msg.id;
+    // txMsg.data[0] = msg.data[0];
+
+    int16_t cur_bytes =  (msg.data[2] << 8) | msg.data[1];
+    // int32_t cur_bytes = (msg.data[4] << 24) | (msg.data[3] << 16) | (msg.data[2] << 8) | msg.data[1];
+    
+    //  Coppy memory of current to    
+    std::memcpy(&controller->des_cur_bytes, &cur_bytes, sizeof(int16_t));
+    
+    get_sensors(rxMsg);
 
     can.write(txMsg);
 }
