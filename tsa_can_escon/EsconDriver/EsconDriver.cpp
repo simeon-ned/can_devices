@@ -46,6 +46,12 @@ uint16_t EsconDriver::getCurrentU16()
     return mot_cur_in.read_u16(); // mot_cur_in provide the float value in range [0, 1]
 }
 
+uint16_t EsconDriver::getFilteredCurrentU16()
+{
+    return mot_cur_flt_in.read_u16(); // mot_cur_in provide the float value in range [0, 1]
+}
+
+
 // get filtered motor current
 float EsconDriver::getFilteredCurrent()
 {

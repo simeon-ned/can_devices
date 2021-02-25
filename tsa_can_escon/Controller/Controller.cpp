@@ -53,7 +53,7 @@ void Controller::updateSensors(){
     mot_counts = sensors->getMotorCounter(); // 0 ... 65535
     lin_counts = sensors->getLinearCounter(); // 0 ... 65535
     f_sensor = sensors->getForceU16();     // 0    ... 65535
-    m_current = driver->getCurrentU16();   // 0    ... 65535
+    m_current = driver->getFilteredCurrentU16();   // 0    ... 65535
 }
 
 
