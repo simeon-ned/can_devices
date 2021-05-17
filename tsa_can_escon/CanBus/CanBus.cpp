@@ -241,8 +241,8 @@ void CanBus::set_current(CANMessage &msg)
     txMsg.data[3] = *((uint8_t *)(&lin_counts) + 1);
     txMsg.data[4] = *(uint8_t *)(&f_sensor); // f_sensor & 0xFF;
     txMsg.data[5] = *((uint8_t *)(&f_sensor) + 1);
-    txMsg.data[6] = m_current & 0xFF;
-    txMsg.data[7] = (m_current & 0xFF00) >> 8;
+    txMsg.data[6] = *(uint8_t *)(&m_current); // f_sensor & 0xFF;
+    txMsg.data[7] = *((uint8_t *)(&m_current) + 1);
 
     can.write(txMsg);
 }

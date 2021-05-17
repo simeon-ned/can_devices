@@ -89,12 +89,12 @@ void EsconDriver::setCurrentU16(int16_t current_int16)
     
     if (current_int16 > 0.)
     {
-        mot_dir = 1;
+        mot_dir = 0;
         mot_dir_led = mot_dir; // turn on led if motor rotates CCW
     }
     else
     {
-        mot_dir = 0;
+        mot_dir = 1;
         mot_dir_led = mot_dir; // turn off led if motor rotates CW
     }
     

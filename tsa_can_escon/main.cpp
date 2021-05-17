@@ -16,11 +16,11 @@
 
 //Serial usb(USBTX, USBRX, 115200);
 
-// // DRIVER //
+// DRIVER //
 // PinName driverDigitalPins[] = {
-//     PE_3, // motor enable output: 0 - disable, 1 - enable
+//     PE_2, // motor enable output: 0 - disable, 1 - enable
 //     LED1, // motor enable LED
-//     PE_2, // motor direction output: 0 - CW, 1 - CCW
+//     PE_3, // motor direction output: 0 - CW, 1 - CCW
 //     LED2  // motor direction LED
 // };
 
@@ -40,7 +40,7 @@ PinName driverDigitalPins[] = {
 };
 
 PinName driverAnalogPins[] = {
-    PF_4, // motor current inpute
+    PF_4, // motor current input
     PC_3, // motor filtered current input
     PA_4  // motor setpoint output
 };
